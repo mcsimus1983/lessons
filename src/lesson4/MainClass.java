@@ -12,6 +12,7 @@ public class MainClass {
     public static char[][] map;
     public static Scanner sc = new Scanner(System.in);
     public static Random rand = new Random();
+    int i = 5;
 
     public static void main(String[] args) {
         initMap();
@@ -72,7 +73,7 @@ public class MainClass {
         for (int i = 0; i < DOTS_TO_WIN; i++) {
             int pX = x + i;
             int pY = y + i;
-            if (pX < SIZE && pY < SIZE){
+            if (pX < SIZE && pY < SIZE) {
                 if (map[x + i][y + i] == symb || map[x + i][y + i] == symb) {
                     count++;
                 } else {
