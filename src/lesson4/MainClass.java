@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MainClass {
-    public static int SIZE = 3;
+    public static int SIZE = 5;
     public static int DOTS_TO_WIN = 3;
     public static final char DOT_EMPTY = '•';
     public static final char DOT_X = 'X';
@@ -12,7 +12,6 @@ public class MainClass {
     public static char[][] map;
     public static Scanner sc = new Scanner(System.in);
     public static Random rand = new Random();
-    int i = 5;
 
     public static void main(String[] args) {
         initMap();
@@ -43,24 +42,99 @@ public class MainClass {
     }
 
     public static boolean checkWin(char symb) {
-        /*if(map[0][0] == symb && map[0][1] == symb && map[0][2] == symb) return true;
-        if(map[1][0] == symb && map[1][1] == symb && map[1][2] == symb) return true;
-        if (map[2][0] == symb && map[2][1] == symb && map[2][2] == symb) return true;
-        if (map[0][0] == symb && map[1][0] == symb && map[2][0] == symb) return true;
 
-        if (map[0][1] == symb && map[1][1] == symb && map[2][1] == symb) return true;
-        if (map[0][2] == symb && map[1][2] == symb && map[2][2] == symb) return true;
-        if (map[0][0] == symb && map[1][1] == symb && map[2][2] == symb) return true;
-        if (map[2][0] == symb && map[1][1] == symb && map[0][2] == symb) return true;
-        return false;*/
+        if (checkLineHor(symb)) return true;
+        if (checkLineVert(symb)) return true;
+        if (checkLineDiagRight(symb)) return true;
+        if (checkLineDiagLeft(symb)) return true;
+
+        return false;
+
+    }
+
+    private static boolean checkLineDiagLeft(char symb) {
+
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
+                int count = 0;
+                for (int k = 0; k < DOTS_TO_WIN; k++) {
+                    int tmpX = j - k;
+                    int tmpY = i + k;
+                    if (tmpY >= SIZE || tmpX < 0) break;
 
-                if (map[i][j] == symb) {
-                    if (check(i, j, symb)) {
+                    if (map[tmpX][tmpY] == symb) {
+                        count++;
+                    } else {
+                        count = 0;
+                    }
+                    if (count == DOTS_TO_WIN) {
                         return true;
                     }
+                }
+            }
+        }
+        return false;
 
+    }
+
+    private static boolean checkLineDiagRight(char symb) {
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                int count = 0;
+                for (int k = 0; k < DOTS_TO_WIN; k++) {
+                    int tmpX = j + k;
+                    int tmpY = i + k;
+                    if (tmpX >= SIZE || tmpY >= SIZE) break;
+
+                    if (map[tmpX][tmpY] == symb) {
+                        count++;
+                    } else {
+                        count = 0;
+                    }
+                    if (count == DOTS_TO_WIN) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean checkLineVert(char symb) {
+
+        for (int i = 0; i < SIZE; i++) {
+            int count = 0;
+
+            for (int j = 0; j < SIZE; j++) {
+                if (map[j][i] == symb) {
+                    count++;
+                } else {
+                    count = 0;
+                }
+
+                if (count == DOTS_TO_WIN) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean checkLineHor(char symb) {
+
+        for (int i = 0; i < SIZE; i++) {
+            int count = 0;
+
+            for (int j = 0; j < SIZE; j++) {
+                if (map[i][j] == symb) {
+                    count++;
+                } else {
+                    count = 0;
+                }
+
+                if (count == DOTS_TO_WIN) {
+                    return true;
                 }
             }
 
@@ -68,25 +142,6 @@ public class MainClass {
         return false;
     }
 
-    private static boolean check(int x, int y, char symb) {
-        int count = 0;
-        for (int i = 0; i < DOTS_TO_WIN; i++) {
-            int pX = x + i;
-            int pY = y + i;
-            if (pX < SIZE && pY < SIZE) {
-                if (map[x + i][y + i] == symb || map[x + i][y + i] == symb) {
-                    count++;
-                } else {
-                    count = 0;
-                }
-
-
-            }
-        }
-
-        return count == DOTS_TO_WIN;
-
-    }
 
     public static boolean isMapFull() {
         for (int i = 0; i < SIZE; i++) {
