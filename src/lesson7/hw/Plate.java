@@ -14,20 +14,22 @@ public class Plate {
     }
 
     public void addFood(int food) {
-        this.food += food;
+        this.food = Math.min(this.food + food, capacity);
     }
 
     @Override
     public String toString() {
-        return "Plate{" + "capacity=" + capacity + ", food=" + food + '}';
-    }
 
+        return "вместимость= " + capacity + ", осталось еды =" + food;
+    }
 
     public void printInfo() {
         System.out.println(this);
     }
 
     public void decreaseFood(int appetite) {
-        this.food -= appetite;
+        if (appetite < this.food) {
+            this.food -= appetite;
+        }
     }
 }
