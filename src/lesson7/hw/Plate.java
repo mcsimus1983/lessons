@@ -27,9 +27,14 @@ public class Plate {
         System.out.println(this);
     }
 
-    public void decreaseFood(int appetite) {
+    public int decreaseFood(int appetite) {
         if (appetite < this.food) {
             this.food -= appetite;
+            return appetite;
+        }else {
+            int countFood = this.food;
+            this.food = 0;
+            return countFood;
         }
     }
 }
